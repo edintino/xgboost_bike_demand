@@ -2,6 +2,7 @@ library(caret)
 library(xgboost)
 library(ggplot2)
 library(caTools)
+library(corrplot)
 
 ############################################## deals with the date
 
@@ -27,7 +28,8 @@ date_func <- function(dataset) {
 
 dataset <- read.csv('train.csv')
 dataset <- date_func(dataset)
-dataset <- dataset[-c(9,10)]
+corrplot(cor(dataset), method = 'shade', addCoef.col="black",shade.col=NA)
+dataset <- dataset[-c(9,10,13)] # drop correlated
 
 
 set.seed(123)
@@ -70,7 +72,7 @@ param <- list(alpha = params.min$alpha, lambda = params.min$lambda)
 
 ############################################## train the model
 
-dataset$count <- log(dataset$count)
+dataset$count <- log(dataset$count) # log transfromation
 
 classifier <- xgboost(params = param,
                       data = as.matrix(dataset[-9]),
@@ -83,6 +85,7 @@ testset <- read.csv('test.csv')
 date <- testset$datetime
 
 testset <- date_func(testset)
+testset <- testset[-10]
 
 preds <- predict(classifier, newdata = as.matrix(testset))
 preds <- exp(preds)
