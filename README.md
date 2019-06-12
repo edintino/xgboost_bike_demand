@@ -1,6 +1,6 @@
 # Top 10% solution for [Bike Sharing Demand kaggle challange](https://www.kaggle.com/c/bike-sharing-demand) with [xgboost](https://xgboost.readthedocs.io/en/latest/)
 
-After we look at the dataset we can see that we have a datetime column, which we are going to separate to individual columns, such as year, month, day, hour. Furthermore to not leak solutions we get rid of the casual, registered columns and due to the high correlation we remove the month column also.
+After we look at the dataset we can see that there are no missing data and we have a datetime column, which we are going to separate to individual columns, such as year, month, day, hour. Furthermore to not leak solutions we get rid of the casual, registered columns and due to the high correlation we remove the month column also.
 
 | Correlation plot |
 |------------------|
